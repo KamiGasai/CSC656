@@ -1,6 +1,6 @@
 /**
 * sys2 is a Branch Prediction Simulator program (basic 2-bit predictor with branch target buffer)
-* sys1 read the trace file and return a table of details including:
+* sys2 read the trace file and return a table of details including:
 *       1.the total number of conditional branches
 *       2.the number of forward branches
 *       3.the number of backward branches
