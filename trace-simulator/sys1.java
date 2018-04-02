@@ -1,3 +1,20 @@
+/**
+* sys1 is a Branch Prediction Simulator program (static prediction)
+* sys1 read the trace file and return a table of details including: 
+*	1.the total number of conditional branches 
+*	2.the number of forward branches
+*	3.the number of backward branches
+*	4.the number of forward taken branches
+*	5.the number of backward taken branches
+*	6.the number of mispredicted branches
+* 	7.the misprediction rate for all branches (# mispredictions / # branches)
+* Compilation: javac sys1.java
+* Run: java sys1 xxx.trace
+* @author Peitong Shi
+* @since 2018-04-02
+* 
+**/
+
 import java.lang.Exception;
 import java.lang.Long;
 import java.lang.String;

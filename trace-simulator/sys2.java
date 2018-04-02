@@ -1,3 +1,27 @@
+/**
+* sys2 is a Branch Prediction Simulator program (basic 2-bit predictor with branch target buffer)
+* sys1 read the trace file and return a table of details including:
+*       1.the total number of conditional branches
+*       2.the number of forward branches
+*       3.the number of backward branches
+*       4.the number of forward taken branches
+*       5.the number of backward taken branches
+*       6.the number of mispredicted branches
+*       7.the misprediction rate for all branches (# mispredictions / # branches)
+*	8.the number of BTB misses
+*       9.the BTB miss rate (# BTB misses / # BTB accesses)
+* Compilation: javac sys2.java
+* Run: java sys2 xxx.trace N M [-v] (-v for verbose mode to list more detail of trace table)
+* @author Peitong Shi
+* @since 2018-04-02
+*
+**/
+
+
+
+
+
+
 import java.math.BigInteger;
 import java.lang.Exception;
 import java.lang.Long;
