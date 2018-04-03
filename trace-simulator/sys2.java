@@ -146,17 +146,41 @@ class sys2
 		    predictTaken = true;
 		}
 
-                if (taken && predictTaken) {
+               /* if (taken && predictTaken) {
                      BTBuffer[BTBindex] = 1;
                      BTBtag[BTBindex] = Taghex;
-                }
+			System.out.print(" now ");
+                }*/
 
-		if (predictTaken) {
+
+               /* if (BTBtag[BTBindex].equals("")) { 
+		    BTBtag[BTBindex] = Taghex;
+		} else if (taken && predictTaken) {
+                     BTBuffer[BTBindex] = 1;
+                     BTBtag[BTBindex] = Taghex;
+                        BTBmiss++;
+               }*/
+		if (BTBtag[BTBindex].equals("")) { BTBtag[BTBindex] = Taghex;}	 //if the BTB[index] is empty, store the first Tag we meet
+	
+	        if (predictTaken) {  
+    		    if (taken) { 
+		        if(BTBuffer[BTBindex] == 0) {BTBuffer[BTBindex] = 1; BTBmiss++;}   //If it is actually taken and predict taken valid bit update, but miss happens because valid bit is initally 0
+			    BTBtag[BTBindex] = Taghex;			
+	            }
+		    if (BTBtag[BTBindex].equals(Taghex) && BTBuffer[BTBindex] == 1) { BTBhit++;} else {BTBmiss++;} //if valid bit is 1, and tag is the same, HIT
+                }
+		
+                
+
+	/*	if (predictTaken) {
 		    if (BTBtag[BTBindex].equals(Taghex) && BTBuffer[BTBindex] ==1) {
 		    	BTBhit++;
 		    }else {BTBmiss++;}
-		}
+		}*/
 		
+       
+
+
 		if (instructionAddress < targetAddressTakenBranch) { 
 			FB++;
 			if (taken) { 
