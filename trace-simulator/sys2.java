@@ -135,27 +135,32 @@ class sys2
 		boolean predictTaken = false;
 
 		//System.out.println(BinaryFullStr + "\n" + BinaryPBStr + "\n" + BinaryBTBStr +"\n")
-		if (verboseMode == 1) {;
+		if (verboseMode == 1) {
 			System.out.print(NOB + " " + PBindex + " " + PBuffer[PBindex] + " " );
 		}
-		if (BTBtag[BTBindex].length() == 0) {BTBtag[BTBindex] = Taghex;}
+
+		if (TNnotBranch.equals("T")) {taken = true; /*System.out.print("Taken ");*/ } 
+	/*	if (BTBtag[BTBindex].length() == 0) {BTBtag[BTBindex] = Taghex; /*System.out.print("Empty at " + BTBindex + "Tag " + Taghex+ " ");*/
 		
 		if (PBuffer[PBindex] >=2) {
 		    predictTaken = true;
 		}
 
+                if (taken && predictTaken) {
+                     BTBuffer[BTBindex] = 1;
+                     BTBtag[BTBindex] = Taghex;
+                }
+
 		if (predictTaken) {
-		    if (BTBtag[BTBindex].equals(Taghex)) {
+		    if (BTBtag[BTBindex].equals(Taghex) && BTBuffer[BTBindex] ==1) {
 		    	BTBhit++;
-			if (BTBuffer[BTBindex] == 0) {BTBmiss++; BTBuffer[BTBindex] = 1;}//System.out.println("missed");
-		    }
+		    }else {BTBmiss++;}
 		}
 		
 		if (instructionAddress < targetAddressTakenBranch) { 
 			FB++;
-			if (TNnotBranch.equals("T")) { 
+			if (taken) { 
 			    FTB++;
-			    taken = true;
 	         	    if (PBuffer[PBindex] < 3) { PBuffer[PBindex]++; }
 			    
 			} 
@@ -164,9 +169,8 @@ class sys2
 		else { 
 			BB++;
 			//System.out.println("Backward Branch");
-			if (TNnotBranch.equals("T")) { 
+			if (taken) { 
 			    BTB++;
-			    taken = true;
 			    if (PBuffer[PBindex] < 3) { PBuffer[PBindex]++; }
 			}
 			else {
@@ -174,11 +178,6 @@ class sys2
 			}
 		}
 		if (predictTaken != taken) { MP++;}
-		
-		if ((taken && predictTaken)) {
-		     BTBuffer[BTBindex] = 1;
-	             BTBtag[BTBindex] = Taghex;
-		}
 		NOB++;
 		if (verboseMode == 1) {
 	    	    System.out.println(PBuffer[PBindex] + " " + BTBindex + " " + Taghex + " " + BTBhit + " " + BTBmiss);
