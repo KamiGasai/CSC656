@@ -9,7 +9,8 @@
 *	6.the number of mispredicted branches
 * 	7.the misprediction rate for all branches (# mispredictions / # branches)
 * Compilation: javac sys1.java
-* Run: java sys1 xxx.trace
+* Run: java sys1 xxx.trace  (Please put the test trace file and sys1 in same directory.)
+*
 * @author Peitong Shi
 * @since 2018-04-02
 * 

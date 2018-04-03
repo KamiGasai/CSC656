@@ -11,7 +11,7 @@
 *	8.the number of BTB misses
 *       9.the BTB miss rate (# BTB misses / # BTB accesses)
 * Compilation: javac sys2.java
-* Run: java sys2 xxx.trace N M [-v] (-v for verbose mode to list more detail of trace table)
+* Run: java sys2 xxx.trace N M [-v] (-v for verbose mode to list more detail of trace table) (Please put the test trace file and sys2 in same directory)
 * @author Peitong Shi
 * @since 2018-04-02
 *
@@ -84,7 +84,7 @@ class sys2
 	}
 	int BTBhit = 0;
 	int BTBmiss = 0;
-	
+	int BTBaccess = 0;	
         BufferedReader r = new BufferedReader(new InputStreamReader(incomingStream));
         String line;
         
@@ -162,12 +162,9 @@ class sys2
                }*/
 		if (BTBtag[BTBindex].equals("")) { BTBtag[BTBindex] = Taghex;}	 //if the BTB[index] is empty, store the first Tag we meet
 	
-	        if (predictTaken) {  
-    		    if (taken) { 
-		        if(BTBuffer[BTBindex] == 0) {BTBuffer[BTBindex] = 1; BTBmiss++;}   //If it is actually taken and predict taken valid bit update, but miss happens because valid bit is initally 0
-			    BTBtag[BTBindex] = Taghex;			
-	            }
+	        if (predictTaken) {              
 		    if (BTBtag[BTBindex].equals(Taghex) && BTBuffer[BTBindex] == 1) { BTBhit++;} else {BTBmiss++;} //if valid bit is 1, and tag is the same, HIT
+		    if (taken) { BTBtag[BTBindex] = Taghex; BTBuffer[BTBindex] = 1;}
                 }
 		
                 
@@ -203,8 +200,10 @@ class sys2
 		}
 		if (predictTaken != taken) { MP++;}
 		NOB++;
+		BTBaccess = BTBhit + BTBmiss;
+
 		if (verboseMode == 1) {
-	    	    System.out.println(PBuffer[PBindex] + " " + BTBindex + " " + Taghex + " " + BTBhit + " " + BTBmiss);
+	    	    System.out.println(PBuffer[PBindex] + " " + BTBindex + " " + Taghex + " " + BTBaccess + " " + BTBmiss);
 	   	}
 	  	// System.out.println("Current hextag: " + BTBtag[BTBindex] + "Current VB: " + BTBuffer[BTBindex]);
 	   // System.out.println("--------------");
@@ -218,7 +217,7 @@ class sys2
 			    + "\nNumber of backward taken branches = " + BTB
 			    + "\nNumber of misprediction = " + MP
 			    + "\nMisprediction rate = " + ((double)MP/(NOB))
-			    + "\nNumber of BTB miss = " + BTBmiss + " " + (double) BTBmiss / BTBhit);
+			    + "\nNumber of BTB miss = " + BTBmiss + " " + (double) BTBmiss / BTBaccess);
     }
     
     public static void main(String[] args) throws Exception
