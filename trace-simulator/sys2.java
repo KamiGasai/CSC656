@@ -160,11 +160,11 @@ class sys2
                      BTBtag[BTBindex] = Taghex;
                         BTBmiss++;
                }*/
-		if (BTBtag[BTBindex].equals("")) { BTBtag[BTBindex] = Taghex;}	 //if the BTB[index] is empty, store the first Tag we meet
+//		if (BTBtag[BTBindex].equals("")) { BTBtag[BTBindex] = Taghex;}	 //if the BTB[index] is empty, store the first Tag we meet
 	
 	        if (predictTaken) {              
 		    if (BTBtag[BTBindex].equals(Taghex) && BTBuffer[BTBindex] == 1) { BTBhit++;} else {BTBmiss++;} //if valid bit is 1, and tag is the same, HIT
-		    if (taken) { BTBtag[BTBindex] = Taghex; BTBuffer[BTBindex] = 1;}
+		   // if (taken) { BTBtag[BTBindex] = Taghex; BTBuffer[BTBindex] = 1;}
                 }
 		
                 
@@ -201,7 +201,7 @@ class sys2
 		if (predictTaken != taken) { MP++;}
 		NOB++;
 		BTBaccess = BTBhit + BTBmiss;
-
+		if (taken) { BTBtag[BTBindex] = Taghex; BTBuffer[BTBindex] = 1;}//update here, fix problem, used to be "if (taken && predictTaken)", which is incorrect
 		if (verboseMode == 1) {
 	    	    System.out.println(PBuffer[PBindex] + " " + BTBindex + " " + Taghex + " " + BTBaccess + " " + BTBmiss);
 	   	}
