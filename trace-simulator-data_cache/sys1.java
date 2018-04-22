@@ -237,7 +237,7 @@ class sys1
         }
 
 
-        Simulator.simulate(inputStream, cacheSize, verboseMode, ref1, ref2);
+        sys1.simulate(inputStream, cacheSize, verboseMode, ref1, ref2);
     	//long test = Long.parseLong("aa",16);
     	//System.out.println(Long.toString(test,2));
     }
