@@ -140,9 +140,8 @@ class sys2
                         dirtytmp = dirtyBit[(int)decIndex][id];
                         if (loadStore.equals("S")) {
                             dirtyBit[(int)decIndex][id] = 1;
-                        } else {
-                            dirtyBit[(int)decIndex][id] = 0;
-                        }
+                        } else {}
+                            //No state change                        }
 
                         validBit[(int)decIndex][id] = 1;
                         lastUsedTmp = lastUsed[(int)decIndex][id];
