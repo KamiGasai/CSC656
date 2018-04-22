@@ -136,7 +136,6 @@ class sys1
              //   String hexTag = Integer.toString(decTag,10);
 
                 if (( order >= ic1) && (order <= ic2)) {
-                  /*if (loadStore.equals("L")) {System.out.print("L ");} else { System.out.print("S ");}*/
                     System.out.print(order + " " + tokens[9] + " " + hexIndex +" " + hexTag + " " + validBit[(int)decIndex] + " " + tag[(int)decIndex] + " " + dirtyBit[(int)decIndex] + " " + hit);
                 }
                 if (hit == 1) {
