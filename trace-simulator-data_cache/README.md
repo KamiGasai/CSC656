@@ -11,12 +11,12 @@
 
 ### Run:
  sys1: java sys1 [trace_file_path] [cache_size] [verboseMode] [IC1] [IC2] <br/>
-          e.g. "java sys1 gcc.xac 2 -v 0 100" to trace with verbose mode, and only prints out L/S trace from [IC1] to [IC2]
+          e.g. "java sys1 gcc.xac 2 -v 0 100" to trace with verbose mode, and only prints out L/S trace from [IC1] to [IC2]<br/>
           e.g. "java sys1 gcc.xac 2 [anything] 0 100" to do same thing without verbose mode<br/>
 
 
  sys2: java sys2 [trace_file_path] [cache_size] [k-way-set] [verboseMode] [IC1] [IC2]<br/> 
-          e.g. "java sys2 gcc.xac 2 2 -v 0 100" to trace with verbose mode, and only prints out L/S trace from [IC1] to [IC2]
+          e.g. "java sys2 gcc.xac 2 2 -v 0 100" to trace with verbose mode, and only prints out L/S trace from [IC1] to [IC2]<br/>
           e.g. "java sys2 gcc.xac 2 2 [anything] 0 100" to do same thing without verbose mode <br/> . 
 
 **__Make sure to have something for verbose mode to run the project successfully, you have to input 5/6 args for sys1/sys2__** <br/>
