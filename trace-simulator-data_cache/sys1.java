@@ -123,10 +123,15 @@ class sys1
                 String hexTag = Long.toString(decTag,16);
 
 
-                if (tag[(int)decIndex].equals(hexTag)) {
-                   if (validBit[(int)decIndex] == 0) {
+                if (!(tag[(int)decIndex].equals("0"))) {   
+                    validBit[(int)decIndex] = 1;
+                }
+
+
+                if (tag[(int)decIndex].equals(hexTag)) {    //if hit
+                   /*if (validBit[(int)decIndex] == 0) {
                         validBit[(int)decIndex] = 1;
-                    }
+                    }*/
                     hit = 1;
                 }
 
@@ -135,11 +140,14 @@ class sys1
            //     String hexIndex = Integer.toString(decIndex,10);
              //   String hexTag = Integer.toString(decTag,10);
 
-                if (( order >= ic1) && (order <= ic2)) {
+
+
+                //Calculation and print here
+                if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                     System.out.print(order + " " + tokens[9] + " " + hexIndex +" " + hexTag + " " + validBit[(int)decIndex] + " " + tag[(int)decIndex] + " " + dirtyBit[(int)decIndex] + " " + hit);
                 }
                 if (hit == 1) {
-                    if (( order >= ic1) && (order <= ic2)) {
+                    if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                         System.out.println(" 1");
                     }
                     if(loadStore.equals("L")) {
@@ -148,7 +156,7 @@ class sys1
                         totalWriteTime+=1;
                     }
                 }  else if (dirtyBit[(int)decIndex] == 1){
-                    if (( order >= ic1) && (order <= ic2)) {
+                    if (( order >= ic1) && (order <= ic2) && (verbose == 1) ) {
                         System.out.println(" 2b");
                     }
                     if (loadStore.equals("L")) {
@@ -161,7 +169,7 @@ class sys1
                         dWriteMiss++;
                         }
                     } else {
-                        if (( order >= ic1) && (order <= ic2)) {
+                        if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                            System.out.println(" 2a");
                         }
                         if (loadStore.equals("L")) {
@@ -174,19 +182,21 @@ class sys1
                     }
                 
 
-                if ((tag[(int)decIndex] != hexTag) && (hit == 0)) {
-                    tag[(int)decIndex] = hexTag;
+                if (!(tag[(int)decIndex].equals(hexTag)) && (hit == 0)) {    //if miss, store the new tag into cache
+                    tag[(int)decIndex] = hexTag;                            
                     dirtyBit[(int)decIndex] = 0;
                 }
                 if (loadStore.equals("S")) {
-                    dirtyBit[(int)decIndex] = 1;
+                    dirtyBit[(int)decIndex] = 1;                            //because memory is written, dirtyBit is changed to 1
                 }
                 order++;
 
-                if (loadStore.equals("L")) {numRead++;} else {numWrite++;}
+                if (loadStore.equals("L")) {numRead++;} else {numWrite++;}      //calculation
             }
             hit = 0;
         }
+
+        //output variable
         numDataAccess = numRead + numWrite;
         dataMiss = readMiss+writeMiss;
         readBytesFromMemory = 16 * (readMiss+writeMiss); 
@@ -232,7 +242,7 @@ class sys1
                 System.exit(1);
             }
         } else {
-            System.out.println("Sorry, please re-enter the parameter in the way as java sys1 [tracefile.xac] [cacheSize] [verboseMode] [IC1] [IC2]\ne.g. {java sys1 gcc.xac 4 -v 100 200}");
+            System.out.println("Sorry, please re-enter the parameter in the way as java sys1 [tracefile.xac] [cacheSize] [verboseMode] [IC1] [IC2]\ne.g. {java sys1 gcc.xac 2 -v 100 200} for verbose mode, \n{java sys1 gcc.xac 2 [anything] 100 200} for normal mode");
             System.exit(1);
         }
 

@@ -139,9 +139,9 @@ class sys2
                       //  if (( order >= ic1) && (order <= ic2)) { System.out.print("   TAG   " + hexTag + "   =   " + tag[(int)decIndex][b] + "   ");}
                         dirtytmp = dirtyBit[(int)decIndex][id];
                         if (loadStore.equals("S")) {
-                            dirtyBit[(int)decIndex][id] = 1;
+                            dirtyBit[(int)decIndex][id] = 1;    //store so change dirty bit
                         } else {}
-                            //No state change                        }
+                            // Read = No state change                        }
 
                         validBit[(int)decIndex][id] = 1;
                         lastUsedTmp = lastUsed[(int)decIndex][id];
@@ -153,11 +153,11 @@ class sys2
                 } 
 
                 int smallest = 0;
-                if (hit == 0) {
-                    for (int b = 1; b < k; b++) { //case 2
+                if (hit == 0) {                   //case 2, miss
+                    for (int b = 1; b < k; b++) { //Loop to find the last used block
                         if (lastUsed[(int)decIndex][smallest] > lastUsed[(int)decIndex][b]) {
                             smallest = b;
-                        }
+                        }       
                         id = smallest;
                         dirtytmp = dirtyBit[(int)decIndex][id];
 
@@ -177,7 +177,7 @@ class sys2
                             }
                         }
 */
-                        if (tag[(int)decIndex][id].equals("0") || !(tag[(int)decIndex][id].equals(hexTag))) {
+                        if (tag[(int)decIndex][id].equals("0") || !(tag[(int)decIndex][id].equals(hexTag))) {   //Block empty, or not fit
                             lastStoredHex = tag[(int)decIndex][id];
                             tag[(int)decIndex][id] = hexTag;
                             lastUsedTmp = lastUsed[(int)decIndex][id];
@@ -213,35 +213,18 @@ class sys2
                         }
                 }
 
-
-
-                
-                
-                /*
-                if (tag[(int)decIndex].equals(hexTag)) {
-                   if (validBit[(int)decIndex] == 0) {
-                        validBit[(int)decIndex] = 1;
-                    }
-                    hit = 1;
-                } 
-                */
-
-
-
-           //     String hexIndex = Integer.toString(decIndex,10);
-             //   String hexTag = Integer.toString(decTag,10);
-
-                if (( order >= ic1) && (order <= ic2)) {
+                //Calculation and printing
+                if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                     if (loadStore.equals("L")) {System.out.print("L ");} else {System.out.print("S ");}
                     System.out.print(order + " " + tokens[9] + " " + hexIndex +" " + hexTag + " " + validBit[(int)decIndex][id] + " " + id + " " + lastUsedTmp + " " + lastStoredHex + " " + dirtytmp + " " + hit);
                 }
 
                 if (hit == 1) {
-                    if (( order >= ic1) && (order <= ic2)) {
+                    if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                         System.out.println(" 1");
                     }
                 }  else if (dirtytmp == 1){
-                    if (( order >= ic1) && (order <= ic2)) {
+                    if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                         System.out.println(" 2b");
                     }
                     if (loadStore.equals("L")) {
@@ -252,7 +235,7 @@ class sys2
                         
                         }
                     } else {
-                        if (( order >= ic1) && (order <= ic2)) {
+                        if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                            System.out.println(" 2a");
                         }
                         if (loadStore.equals("L")) {
@@ -271,6 +254,7 @@ class sys2
             }
             hit = 0;
         }
+        //output variable
         numDataAccess = numRead + numWrite;
         dataMiss = readMiss+writeMiss;
         readBytesFromMemory = 16 * (readMiss+writeMiss); 
@@ -318,7 +302,7 @@ class sys2
                 System.exit(1);
             }
         } else {
-            System.out.println("Sorry, please re-enter the parameter in the way as java sys1 [tracefile.xac] [cacheSize] [verboseMode] [IC1] [IC2]\ne.g. {java sys1 gcc.xac 4 -v 100 200}");
+            System.out.println("Sorry, please re-enter the parameter in the way as java sys2 [tracefile.xac] [cacheSize] [k-way-sets] [verboseMode] [IC1] [IC2]\ne.g. {java sys2 gcc.xac 2 2 -v 100 200} for verbose mode, \n{java sys2 gcc.xac 2 2 [anything] 100 200} for normal mode");
             System.exit(1);
         }
 
