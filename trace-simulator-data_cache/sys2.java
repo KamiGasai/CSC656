@@ -160,8 +160,8 @@ class sys2
                         }       
                         id = smallest;
                         dirtytmp = dirtyBit[(int)decIndex][id];
-
-/*
+                    }
+/*  
 
                         if (loadStore.equals("S")) {
                             dirtyBit[(int)decIndex][id] = 1;
@@ -203,9 +203,9 @@ class sys2
                                 dReadMiss++;
                             }
                         }
-
                     }
-                } else {
+                    
+                 else {
                     if (loadStore.equals("S")) {
                             totalWriteTime+=1;
                         } else {
