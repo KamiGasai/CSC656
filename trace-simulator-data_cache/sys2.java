@@ -66,6 +66,7 @@ class sys2
         int totalWriteTime = 0;
         double missRate = 0;
         int lastUsedTmp = 0;
+        int validBitTmp = 0;
         String lastStoredHex = "";
 
         for (int i = 0; i < numOfsets; i++) {
@@ -73,7 +74,7 @@ class sys2
                 validBit[i][j] = 0;
                 tag[i][j] = "0";
                 dirtyBit[i][j] = 0;
-                lastUsed[i][j] = 0;
+                lastUsed[i][j] = -1;
             }
         }
 
@@ -142,7 +143,7 @@ class sys2
                             dirtyBit[(int)decIndex][id] = 1;    //store so change dirty bit
                         } else {}
                             // Read = No state change                        }
-
+                        validBitTmp = validBit[(int)decIndex][id];
                         validBit[(int)decIndex][id] = 1;
                         lastUsedTmp = lastUsed[(int)decIndex][id];
                         lastUsed[(int)decIndex][id] = order;
@@ -158,52 +159,33 @@ class sys2
                         if (lastUsed[(int)decIndex][smallest] > lastUsed[(int)decIndex][b]) {
                             smallest = b;
                         }       
-                        id = smallest;
-                        dirtytmp = dirtyBit[(int)decIndex][id];
                     }
-/*  
+                    id = smallest;
+                    dirtytmp = dirtyBit[(int)decIndex][id];
+                    validBitTmp = validBit[(int)decIndex][id];
+                    validBit[(int)decIndex][id] = 1;
+                    lastStoredHex = tag[(int)decIndex][id];
+                    tag[(int)decIndex][id] = hexTag;
+                    lastUsedTmp = lastUsed[(int)decIndex][id];
+              
+                    lastUsed[(int)decIndex][id] = order;
 
-                        if (loadStore.equals("S")) {
+                    if (dirtytmp == 0) { //case 2a
+                        if(loadStore.equals("S")) {
                             dirtyBit[(int)decIndex][id] = 1;
-                            writeMiss++;
-                            if (dirtytmp == 1) {
-                                dWriteMiss++;
-                            }
                         } else {
-                            readMiss++;
                             dirtyBit[(int)decIndex][id] = 0;
-                            if (dirtytmp == 1) {
-                                dReadMiss++;
-                            }
                         }
-*/
-                        if (tag[(int)decIndex][id].equals("0") || !(tag[(int)decIndex][id].equals(hexTag))) {   //Block empty, or not fit
-                            lastStoredHex = tag[(int)decIndex][id];
-                            tag[(int)decIndex][id] = hexTag;
-                            lastUsedTmp = lastUsed[(int)decIndex][id];
-                            lastUsed[(int)decIndex][id] = order;
-                        } 
-
-                        if (dirtyBit[(int)decIndex][id] == 0) { //case 2a
-                            if(loadStore.equals("S")) {
-                                dirtyBit[(int)decIndex][id] = 1;
-                                writeMiss++;
-                            } else {
-                                readMiss++;
-                                dirtyBit[(int)decIndex][id] = 0;
-                            }
-                        } else {  //case 2b
-                            if(loadStore.equals("S")) {
-                                writeMiss++;
-                                dWriteMiss++;
-                                dirtyBit[(int)decIndex][id] = 1;
-                            } else {
-                                readMiss++;
-                                dirtyBit[(int)decIndex][id] = 0;
-                                dReadMiss++;
-                            }
+                    } else {  //case 2b
+                        if(loadStore.equals("S")) {
+                            dWriteMiss++;
+                            dirtyBit[(int)decIndex][id] = 1;
+                        } else {
+                            dirtyBit[(int)decIndex][id] = 0;
+                            dReadMiss++;
                         }
                     }
+                }
                     
                  else {
                     if (loadStore.equals("S")) {
@@ -215,33 +197,40 @@ class sys2
 
                 //Calculation and printing
                 if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
-                    if (loadStore.equals("L")) {System.out.print("L ");} else {System.out.print("S ");}
-                    System.out.print(order + " " + tokens[9] + " " + hexIndex +" " + hexTag + " " + validBit[(int)decIndex][id] + " " + id + " " + lastUsedTmp + " " + lastStoredHex + " " + dirtytmp + " " + hit);
+                    System.out.print(order + " " + tokens[9] + " " + hexIndex +" " + hexTag + " " + validBitTmp + " " + id + " ");
+                    if (lastUsedTmp == -1) {
+                        System.out.print("0 " + lastStoredHex + " " + dirtytmp + " " + hit);
+                    } else {
+                        System.out.print(lastUsedTmp + " " + lastStoredHex + " " + dirtytmp + " " + hit);
+                    }
                 }
 
                 if (hit == 1) {
                     if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                         System.out.println(" 1");
                     }
-                }  else if (dirtytmp == 1){
+                } else if (dirtytmp == 1){
                     if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
                         System.out.println(" 2b");
                     }
                     if (loadStore.equals("L")) {
+                        readMiss++;
                         totalReadTime = totalReadTime + 1 + (2*penalty);
-
                     } else {
+                        writeMiss++;
                         totalWriteTime = totalWriteTime + 1 + (2*penalty);
-                        
                         }
-                    } else {
-                        if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
-                           System.out.println(" 2a");
-                        }
-                        if (loadStore.equals("L")) {
-                            totalReadTime = totalReadTime + 1 + penalty;
-                            
+                    } 
+
+                else {
+                    if (( order >= ic1) && (order <= ic2) && (verbose == 1)) {
+                        System.out.println(" 2a");
+                    }
+                    if (loadStore.equals("L")) {
+                        readMiss++;
+                        totalReadTime = totalReadTime + 1 + penalty;  
                         } else {
+                            writeMiss++;
                             totalWriteTime = totalWriteTime + 1 + penalty;
                             
                         }
@@ -308,7 +297,7 @@ class sys2
 
 
         sys2.simulate(inputStream, cacheSize, sets, verboseMode, ref1, ref2);
-    	//long test = Long.parseLong("aa",16);
-    	//System.out.println(Long.toString(test,2));
+        //long test = Long.parseLong("aa",16);
+        //System.out.println(Long.toString(test,2));
     }
 }
