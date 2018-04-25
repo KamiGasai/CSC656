@@ -1,0 +1,9 @@
+		gcc.xac		gcc.xac	       sjeng.xac.      sjeng.xac
+	       Miss Rate    tot. Access Time   Miss Rate.   tot. Access Time
+						
+System 1a	0.1348067	5197601		0.155844	5022552
+System 1b	0.82735		3278241		0.094856	3190232
+System 2a	0.103997	4051441		0.112422	3615112
+System 2b	0.095593	3814721		0.100602	3300632
+System 2c	0.0641		2630561		0.064401	2275432
+System 2d	0.053482	2216481		0.059136	2111672
