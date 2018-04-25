@@ -262,6 +262,7 @@ class sys2
                             "\nnumber of bytes written to memory: " + writeBytesToMemory +
                             "\n\nthe total access time (in cycles) for reads: " + totalReadTime +
                             "\nthe total access time (in cycles) for writes: " + totalWriteTime +
+                            "\nthe total access time for reads and writes: " + (totalWriteTime+totalReadTime) +
                             "\n\nthe overall data cache miss rate: " + missRate); 
     }
 
