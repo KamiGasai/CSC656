@@ -1,0 +1,54 @@
+#!/bin/sh
+# c2050.qsub by Lee Periolat and Trevor Gokey 11/5/2015
+# 
+# For execution of jobs on the Titan CUDA card via qsub
+# Usage: qsub c2050.qsub
+#
+# To run your own executables, modify the $EXE variable 
+
+# The queue to use
+#PBS -q c2050
+
+# Name of job
+#PBS -N c2050Job
+
+# Both input and output will be in one file
+#PBS -j oe
+
+# Set the working directory, it defaults to $HOME
+#PBS -d .
+
+# resource settings
+#PBS -l nodes=1,walltime=00:10:00,gpus=1
+
+# force us to see only the c2050 device
+export CUDA_VISIBLE_DEVICES=1
+
+echo ------------------------------------------------------
+echo -n 'Job is running on node '; cat $PBS_NODEFILE
+echo ------------------------------------------------------
+echo PBS: qsub is running on $PBS_O_HOST
+echo PBS: originating queue is $PBS_O_QUEUE
+echo PBS: executing queue is $PBS_QUEUE
+echo PBS: working directory is $PBS_O_WORKDIR
+echo PBS: execution mode is $PBS_ENVIRONMENT
+echo PBS: job identifier is $PBS_JOBID
+echo PBS: job name is $PBS_JOBNAME
+echo PBS: node file is $PBS_NODEFILE
+echo PBS: gpu file is $PBS_GPUFILE
+echo PBS: current home directory is $PBS_O_HOME
+echo PBS: PATH = $PBS_O_PATH
+echo env: CUDA_VISIBLE_DEVICES = $CUDA_VISIBLE_DEVICES
+echo ------------------------------------------------------
+
+#print the time and date
+date
+
+# link to executable
+EXE='./deviceQuery'
+# execute!
+$EXE
+
+#print the time and date again
+date
+

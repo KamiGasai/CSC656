@@ -1,0 +1,33 @@
+----------Particle Amount:  1024 ----------
+
+Thread Count:  4
+Average is: 1.310347
+
+Thread Count:  16
+Average is: 0.738272
+
+Thread Count:  64
+Average is: 0.753035
+
+----------Particle Amount:  8192 ----------
+
+Thread Count:  4
+Average is: 45.553834
+
+Thread Count:  16
+Average is: 16.602549
+
+Thread Count:  64
+Average is: 7.512928
+
+----------Particle Amount:  32768 ----------
+
+Thread Count:  4
+Average is: 713.300944
+
+Thread Count:  16
+Average is: 206.802902
+
+Thread Count:  64
+Average is: 129.166809
+

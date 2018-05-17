@@ -1,0 +1,57 @@
+RUNNING FOR Particle: 1024
+THREAD COUNT: 4
+Elapsed time = 1.321408
+Elapsed time = 1.305472
+Elapsed time = 1.308320
+Elapsed time = 1.312416
+Elapsed time = 1.310304
+THREAD COUNT: 16
+Elapsed time = 0.738112
+Elapsed time = 0.737792
+Elapsed time = 0.738048
+Elapsed time = 0.738880
+Elapsed time = 0.738656
+THREAD COUNT: 64
+Elapsed time = 0.752352
+Elapsed time = 0.751968
+Elapsed time = 0.753760
+Elapsed time = 0.759680
+Elapsed time = 0.752992
+RUNNING FOR Particle: 8192
+THREAD COUNT: 4
+Elapsed time = 45.531200
+Elapsed time = 45.580128
+Elapsed time = 45.574112
+Elapsed time = 45.538368
+Elapsed time = 45.549023
+THREAD COUNT: 16
+Elapsed time = 16.665953
+Elapsed time = 16.587616
+Elapsed time = 16.506880
+Elapsed time = 16.554079
+Elapsed time = 16.671776
+THREAD COUNT: 64
+Elapsed time = 7.511744
+Elapsed time = 7.524416
+Elapsed time = 7.503168
+Elapsed time = 7.519328
+Elapsed time = 7.507712
+RUNNING FOR Particle: 32768
+THREAD COUNT: 4
+Elapsed time = 707.100159
+Elapsed time = 713.278992
+Elapsed time = 713.399475
+Elapsed time = 713.338318
+Elapsed time = 713.285522
+THREAD COUNT: 16
+Elapsed time = 206.569885
+Elapsed time = 206.701920
+Elapsed time = 206.926727
+Elapsed time = 206.867004
+Elapsed time = 206.839783
+THREAD COUNT: 64
+Elapsed time = 128.619080
+Elapsed time = 129.136612
+Elapsed time = 128.103622
+Elapsed time = 129.744736
+Elapsed time = 130.332031
